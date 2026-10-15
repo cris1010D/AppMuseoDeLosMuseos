@@ -15,30 +15,13 @@ import cl.duoc.museodelosmuseos.ui.theme.AppMuseoDeLosMuseosTheme
 
 
 
-import android.util.Log
-import androidx.lifecycle.lifecycleScope
-import cl.duoc.museodelosmuseos.repository.LocalRepository
-import cl.duoc.museodelosmuseos.repository.local.AppDatabase
-import cl.duoc.museodelosmuseos.repository.local.SessionManager
-import kotlinx.coroutines.launch
+
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // ---- PRUEBA TEMPORAL DE ROOM (borrar después) ----
-        val repo = LocalRepository(
-            AppDatabase.getInstance(this),
-            SessionManager.getInstance(this)
-        )
-        lifecycleScope.launch {
-            val id = repo.ingresar("Cristóbal", "cristobal@duocuc.cl")
-            repo.alternarFavorito("museo_prado")
-            val primera = repo.registrarLecturaQr("PROD-001", "PRODUCTO")
-            val segunda = repo.registrarLecturaQr("PROD-001", "PRODUCTO")
-            Log.d("PruebaRoom", "Usuario=$id | 1ra lectura=$primera | 2da lectura=$segunda")
-        }
-        // ---- FIN PRUEBA ----
+
         enableEdgeToEdge()
         setContent {
             AppMuseoDeLosMuseosTheme {
