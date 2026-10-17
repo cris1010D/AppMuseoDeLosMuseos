@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import cl.duoc.museodelosmuseos.ui.screens.CotizadorScreen
+import cl.duoc.museodelosmuseos.ui.screens.MapaScreen
 import cl.duoc.museodelosmuseos.ui.theme.AppMuseoDeLosMuseosTheme
 
 
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppMuseoDeLosMuseosTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CotizadorScreen(modifier = Modifier.padding(innerPadding))
+                    MapaScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
