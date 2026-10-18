@@ -1,5 +1,6 @@
 package cl.duoc.museodelosmuseos.ui.screens
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cl.duoc.museodelosmuseos.repository.RepositoryProvider
+import cl.duoc.museodelosmuseos.viewmodel.CotizadorViewModel
 import cl.duoc.museodelosmuseos.viewmodel.DetalleProductoViewModel
 
 private fun descripcionDe(categoria: String) = when (categoria) {
@@ -41,6 +43,13 @@ fun DetalleProductoScreen(productoId: String, modifier: Modifier = Modifier) {
         factory = DetalleProductoViewModel.factory(repository, productoId)
     )
     val estado by vm.uiState.collectAsStateWithLifecycle()
+
+    // Mismo CotizadorViewModel que usa la pantalla Cotizador (compartido por la Activity)
+    val carritoVm: CotizadorViewModel = viewModel(
+        viewModelStoreOwner = context as ComponentActivity,
+        factory = CotizadorViewModel.factory(repository)
+    )
+
     var mensaje by remember { mutableStateOf<String?>(null) }
 
     Column(
@@ -66,7 +75,10 @@ fun DetalleProductoScreen(productoId: String, modifier: Modifier = Modifier) {
             Spacer(Modifier.height(24.dp))
 
             Button(
-                onClick = { mensaje = "✓ \"${producto.titulo}\" agregado al carrito" },
+                onClick = {
+                    carritoVm.agregarAlCarrito(producto)
+                    mensaje = "✓ \"${producto.titulo}\" agregado al carrito"
+                },
                 modifier = Modifier.fillMaxWidth()
             ) { Text("Agregar al carrito") }
 

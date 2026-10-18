@@ -28,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import cl.duoc.museodelosmuseos.model.ZonaEnvio
 import cl.duoc.museodelosmuseos.repository.RepositoryProvider
 import cl.duoc.museodelosmuseos.viewmodel.CotizadorViewModel
+import androidx.activity.ComponentActivity
 
 private fun usd(valor: Double) = "USD %.2f".format(valor)
 
@@ -36,7 +37,10 @@ private fun usd(valor: Double) = "USD %.2f".format(valor)
 fun CotizadorScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val repository = remember { RepositoryProvider.productoRepository(context) }
-    val vm: CotizadorViewModel = viewModel(factory = CotizadorViewModel.factory(repository))
+    val vm: CotizadorViewModel = viewModel(
+        viewModelStoreOwner = context as ComponentActivity,
+        factory = CotizadorViewModel.factory(repository)
+    )
     val estado by vm.uiState.collectAsStateWithLifecycle()
 
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {

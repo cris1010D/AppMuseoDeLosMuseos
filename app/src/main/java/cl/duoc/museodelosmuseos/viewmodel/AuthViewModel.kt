@@ -63,18 +63,24 @@ class AuthViewModel(
 
         viewModelScope.launch {
             _uiState.update { it.copy(enviando = true) }
-            val existe = local.observarUsuarios().first().any { it.email == email }
+            val usuario = local.observarUsuarios().first().find { it.email == email }
 
             when {
-                estado.modoRegistro && existe ->
+                estado.modoRegistro && usuario != null ->
                     _uiState.update { it.copy(enviando = false, errorEmail = "Este correo ya está registrado") }
 
-                !estado.modoRegistro && !existe ->
+                !estado.modoRegistro && usuario == null ->
                     _uiState.update { it.copy(enviando = false, errorEmail = "No existe una cuenta con este correo") }
+
+                !estado.modoRegistro && usuario != null && !perfil.claveCorrecta(usuario.id, estado.password) ->
+                    _uiState.update { it.copy(enviando = false, errorPassword = "Contraseña incorrecta") }
 
                 else -> {
                     val id = local.ingresar(estado.nombre.trim(), email)
-                    if (estado.modoRegistro) perfil.guardarAvatar(id, estado.avatar)
+                    if (estado.modoRegistro) {
+                        perfil.guardarAvatar(id, estado.avatar)
+                        perfil.guardarClave(id, estado.password)
+                    }
                     _uiState.update { it.copy(enviando = false) }
                     onExito()
                 }
