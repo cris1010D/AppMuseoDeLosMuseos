@@ -6,6 +6,10 @@ sealed class Screen(val route: String) {
     data object Mapa : Screen("mapa_screen")
     data object Catalogo : Screen("catalogo_screen")
     data object Registro : Screen("registro_screen")
+    data object Escaner : Screen("escaner_screen")
+    data object Cotizador : Screen("cotizador_screen")
+    data object Favoritos : Screen("favoritos_screen")
+    data object Perfil : Screen("perfil_screen")
 
     // Ruta con parámetro para ver el detalle de un museo o producto
     data class Detalle(val id: String) : Screen("detalle_screen/$id") {
