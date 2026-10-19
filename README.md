@@ -105,7 +105,3 @@ El escáner necesita permiso de cámara y el mapa necesita conexión a internet 
 ## Pruebas
 
 Las pruebas unitarias están en `app/src/test/` y cubren el cotizador de envíos, el cálculo de distancias y el validador de QR.
-
-## Nota sobre el desarrollo
-
-La parte de Anderson Ovando (backend, navegación y pantallas nuevas) se desarrolló con la ayuda de Claude, un asistente de inteligencia artificial de Anthropic.
