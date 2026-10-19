@@ -82,7 +82,6 @@ cd backend
 ./gradlew bootRun        # en Windows: gradlew.bat bootRun
 ```
 
-Prueba en el navegador: http://localhost:8080/api/productos
 
 | Método | Ruta | Descripción |
 |---|---|---|
